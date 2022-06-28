@@ -1,0 +1,4 @@
+[admin.storage]
+connection_string = "mongodb://nftmeow:nftmeow@mongo:27017"
+[network.starknet]
+provider_url = "http://192.168.8.100:9545"

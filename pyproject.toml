@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "nftmeow"
+version = "0.1.0"
+description = ""
+authors = ["Francesco Ceccon <francesco@ceccon.me>"]
+
+[tool.poetry.scripts]
+nftmeow-indexer = "nftmeow.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+eth-hash = {extras = ["pysha"], version = "^0.3.2"}
+apibara = "^0.1.0"
+jsonrpc-async = "^2.1.1"
+aiohttp = "^3.8.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
