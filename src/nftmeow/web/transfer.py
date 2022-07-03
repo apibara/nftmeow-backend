@@ -75,6 +75,8 @@ def get_transfers(
 ) -> Connection[Transfer]:
     if first < 1:
         raise ValueError("first must be greater than equal 1")
+    if first > 200:
+        raise ValueError("first must be less than equal 200")
 
     db = info.context.db
 

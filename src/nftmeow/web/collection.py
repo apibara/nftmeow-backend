@@ -74,6 +74,7 @@ def get_collections(
         filter["_id"] = order_direction.mongo_after_cursor(after)
 
     query = db["contracts"].find(filter)
+    query = query.limit(first + 1)
 
     collections = list(query)
 

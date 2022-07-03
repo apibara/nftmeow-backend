@@ -12,7 +12,7 @@ from nftmeow.web.context import Context
 
 from nftmeow.web.pagination import Connection
 from nftmeow.web.collection import Collection, collection_loader, get_collections
-from nftmeow.web.token import Token
+from nftmeow.web.token import Token, get_tokens
 from nftmeow.web.transfer import Transfer, get_transfers
 
 
@@ -23,6 +23,7 @@ logger = getLogger(__name__)
 class Query:
     collections: Connection[Collection] = strawberry.field(resolver=get_collections)
     transfers: Connection[Transfer] = strawberry.field(resolver=get_transfers)
+    tokens: Connection[Token] = strawberry.field(resolver=get_tokens)
 
 
 class NFTMeowGraphQLView(GraphQLView):
