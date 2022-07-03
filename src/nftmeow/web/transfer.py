@@ -35,8 +35,8 @@ class Transfer:
     _token_id: strawberry.Private[TokenId]
 
     @strawberry.field
-    def token(self, info: Info) -> Token:
-        return get_token_by_address_and_id(
+    async def token(self, info: Info) -> Token:
+        return await get_token_by_address_and_id(
             info.context, self._contract_address, self._token_id
         )
 
@@ -53,14 +53,6 @@ class Transfer:
     @classmethod
     def build_cursor(_cls, data: dict) -> str:
         return cursor_from_mongo_id(data["_id"])
-
-
-@dataclass
-class TransferLoader:
-    db: Database
-
-    def __call__(self, *args, **kwargs):
-        pass
 
 
 def get_transfers(

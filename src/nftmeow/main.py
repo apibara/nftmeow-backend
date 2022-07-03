@@ -77,4 +77,4 @@ async def api_server(verbose, host, port, mongo_url, db_name):
 
 
 def _override_mongo_url_with_env(mongo_url):
-    return os.environ.get('NFTMEOW_MONGO_URL', mongo_url)
+    return os.environ.get("NFTMEOW_MONGO_URL", mongo_url)

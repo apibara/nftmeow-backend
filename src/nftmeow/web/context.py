@@ -10,6 +10,7 @@ from strawberry.types import Info as StrawberryInfo
 class Context:
     db: Database
     collection_loader: DataLoader
+    tokens_by_address_token_id_loader: DataLoader
 
 
 Info = StrawberryInfo[Context, Any]

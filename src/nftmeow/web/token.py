@@ -1,6 +1,10 @@
-from typing import Optional, List
+from audioop import add
+from dataclasses import dataclass
+from typing import Optional, List, Tuple
 import strawberry
 from strawberry import UNSET
+from strawberry.dataloader import DataLoader
+from pymongo.database import Database
 
 from nftmeow.web.context import Info, Context
 from nftmeow.web.pagination import (
@@ -39,13 +43,10 @@ class Token:
         return cursor_from_mongo_id(data["_id"])
 
 
-def get_token_by_address_and_id(
+async def get_token_by_address_and_id(
     ctx: Context, address: Address, token_id: TokenId
 ) -> Token:
-    token = ctx.db["tokens"].find_one(
-        {"contract_address": address, "token_id": token_id}
-    )
-
+    token = await ctx.tokens_by_address_token_id_loader.load((address, token_id))
     if token is not None:
         return Token.from_mongo(token)
 
@@ -93,3 +94,32 @@ def get_tokens(
     )
 
     return Connection(page_info=page_info, edges=edges[:-1])
+
+
+@dataclass
+class TokensByAddressTokenIdLoader:
+    db: Database
+
+    async def __call__(self, tokens_addr_id: List[Tuple[Address, TokenId]]):
+        # group by contract address since it's not possible to query
+        # by address/token_id
+        by_addr = dict()
+        for addr, token_id in tokens_addr_id:
+            if addr not in by_addr:
+                by_addr[addr] = []
+            by_addr[addr].append(token_id)
+
+        result = dict()
+        for addr, token_ids in by_addr.items():
+            tokens = self.db["tokens"].find({
+                "contract_address": addr,
+                "token_id": { "$in": token_ids }
+            })
+            for token in tokens:
+                result[addr, token['token_id']] = token
+
+        return [result[addr, token_id] for addr, token_id in tokens_addr_id]
+
+
+def tokens_by_address_token_id_loader(db):
+    return DataLoader(TokensByAddressTokenIdLoader(db))
