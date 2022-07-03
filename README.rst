@@ -92,7 +92,6 @@ Example Queries
                 name
               }
             }
-        
           }
         }
       }
@@ -104,12 +103,12 @@ Getting Started
 
 Start by installing `docker-compose` and using it to run MongoDB and Apibara Server.
 
-- `docker-compose up`
+- :code:`docker-compose up`
 
 Then install Poetry and the Python dependencies needed by this project.
 
-- `poetry install`
+- :code:`poetry install`
 
 Finally, run the indexer.
 
-- `nftmeow indexer`
+- :code:`nftmeow indexer`
