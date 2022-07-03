@@ -5,7 +5,7 @@ description = ""
 authors = ["Francesco Ceccon <francesco@ceccon.me>"]
 
 [tool.poetry.scripts]
-nftmeow-indexer = "nftmeow.main:main"
+nftmeow = "nftmeow.main:cli"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -13,9 +13,14 @@ eth-hash = {extras = ["pysha"], version = "^0.3.2"}
 apibara = "^0.1.0"
 jsonrpc-async = "^2.1.1"
 aiohttp = "^3.8.1"
+lru-dict = "^1.1.7"
+pymongo = {extras = ["srv"], version = "^4.1.1"}
+click = "^8.1.3"
+strawberry-graphql = {extras = ["debug-server", "opentelemetry"], version = "^0.115.0"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+black = "^22.6.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
