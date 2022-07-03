@@ -2,6 +2,7 @@
 
 import asyncio
 import logging
+import os
 
 import click
 from functools import wraps
@@ -45,6 +46,8 @@ async def indexer(reset, verbose, server_url, mongo_url, indexer_id):
     else:
         logging.basicConfig(level=logging.INFO)
 
+    mongo_url = _override_mongo_url_with_env(mongo_url)
+
     indexer = NftIndexer(server_url, mongo_url, indexer_id)
 
     if reset:
@@ -67,4 +70,10 @@ async def api_server(verbose, host, port, mongo_url):
     else:
         logging.basicConfig(level=logging.INFO)
 
+    mongo_url = _override_mongo_url_with_env(mongo_url)
+
     await start_web_server(host, port, mongo_url)
+
+
+def _override_mongo_url_with_env(mongo_url):
+    return os.environ.get('NFTMEOW_MONGO_URL', mongo_url)

@@ -18,4 +18,4 @@ Then install Poetry and the Python dependencies needed by this project.
 
 Finally, run the indexer.
 
- - `nftmeow-indexer`
+ - `nftmeow indexer`
