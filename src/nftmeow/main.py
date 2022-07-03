@@ -62,8 +62,9 @@ async def indexer(reset, verbose, server_url, mongo_url, indexer_id):
 @click.option("--host", default="0.0.0.0", help="Server host.")
 @click.option("--port", default=8080, type=int, help="Server port.")
 @click.option("--mongo-url", default=DEFAULT_MONGODB_URL, help="MongoDB url.")
+@click.option("--db-name", default="nftmeow", help="MongoDB database name.")
 @async_command
-async def api_server(verbose, host, port, mongo_url):
+async def api_server(verbose, host, port, mongo_url, db_name):
     """Start the NFTMeow GraphQL server."""
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
@@ -72,7 +73,7 @@ async def api_server(verbose, host, port, mongo_url):
 
     mongo_url = _override_mongo_url_with_env(mongo_url)
 
-    await start_web_server(host, port, mongo_url)
+    await start_web_server(host, port, mongo_url, db_name)
 
 
 def _override_mongo_url_with_env(mongo_url):

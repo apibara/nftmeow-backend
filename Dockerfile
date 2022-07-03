@@ -7,6 +7,7 @@ COPY poetry.lock .
 COPY pyproject.toml .
 
 RUN python3 -m pip install poetry
+RUN python3 -m pip install pycryptodome
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-dev
 

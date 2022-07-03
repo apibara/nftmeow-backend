@@ -27,10 +27,10 @@ class Query:
 
 
 class NFTMeowGraphQLView(GraphQLView):
-    def __init__(self, mongo_url: str, **kwargs):
+    def __init__(self, mongo_url: str, db_name: str, **kwargs):
         super().__init__(**kwargs)
         self._mongo = MongoClient(mongo_url)
-        self._db = self._mongo["nftmeow"]
+        self._db = self._mongo[db_name]
 
     async def get_context(
         self, _request: web.Request, _response: web.StreamResponse
@@ -38,9 +38,9 @@ class NFTMeowGraphQLView(GraphQLView):
         return Context(db=self._db, collection_loader=collection_loader(self._db))
 
 
-async def start_web_server(host: str, port: int, mongo_url: str):
+async def start_web_server(host: str, port: int, mongo_url: str, db_name: str):
     schema = strawberry.Schema(query=Query)
-    view = NFTMeowGraphQLView(mongo_url, schema=schema)
+    view = NFTMeowGraphQLView(mongo_url, db_name, schema=schema)
 
     app = web.Application()
     app.router.add_route("*", "/graphql", view)
