@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nftmeow"
-version = "0.1.0"
+version = "0.1.2"
 description = ""
 authors = ["Francesco Ceccon <francesco@ceccon.me>"]
 
