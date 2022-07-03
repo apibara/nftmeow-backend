@@ -45,7 +45,7 @@ TokenId = strawberry.scalar(
 def _parse_address(value: str) -> "Address":
     if not value.startswith("0x"):
         raise ValueError("invalid address")
-    return bytes.fromhex(value.replace("0x", "")).zfill(32)
+    return bytes.fromhex(value.replace("0x", "").zfill(64))
 
 
 def _serialize_address(addr: "Address") -> str:

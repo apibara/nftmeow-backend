@@ -1,5 +1,5 @@
 import base64
-from typing import Generic, TypeVar, Optional
+from typing import Generic, TypeVar, Optional, List
 from bson import ObjectId
 
 import strawberry
@@ -47,6 +47,27 @@ class Edge(Generic[GenericType]):
 
     node: GenericType
     cursor: Cursor
+
+
+@strawberry.input
+class Filter(Generic[GenericType]):
+    """A filter over elements of a Collection."""
+
+    eq: Optional[GenericType] = None
+    ne: Optional[GenericType] = None
+    in_: Optional[List[GenericType]] = None
+
+    def mongo_filter(self):
+        if self.eq is not None:
+            return {"$eq": self.eq}
+
+        if self.ne is not None:
+            return {"$ne": self.ne}
+
+        if self.in_ is not None:
+            return {"$in": self.in_}
+
+        raise ValueError("one of eq, ne, or in must be set")
 
 
 def cursor_from_mongo_id(id: ObjectId) -> str:

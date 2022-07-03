@@ -13,6 +13,7 @@ from nftmeow.web.token import Token, get_token_by_address_and_id
 from nftmeow.web.pagination import (
     Cursor,
     Connection,
+    Filter,
     PageInfo,
     Edge,
     cursor_from_mongo_id,
@@ -68,9 +69,9 @@ def get_transfers(
     after: Optional[Cursor] = UNSET,
     order_by: TransferOrderBy = TransferOrderBy.TIME,
     order_direction: OrderDirection = OrderDirection.DESC,
-    collections: Optional[List[Address]] = UNSET,
-    from_addresses: Optional[List[Address]] = UNSET,
-    to_addresses: Optional[List[Address]] = UNSET,
+    collection: Optional[Filter[Address]] = UNSET,
+    from_address: Optional[Filter[Address]] = UNSET,
+    to_address: Optional[Filter[Address]] = UNSET,
 ) -> Connection[Transfer]:
     if first < 1:
         raise ValueError("first must be greater than equal 1")
@@ -78,14 +79,14 @@ def get_transfers(
     db = info.context.db
 
     filter = dict()
-    if from_addresses is not UNSET and len(from_addresses) > 0:
-        filter["from"] = {"$in": from_addresses}
+    if from_address is not UNSET:
+        filter["from"] = from_address.mongo_filter()
 
-    if to_addresses is not UNSET and len(to_addresses) > 0:
-        filter["to"] = {"$in": from_addresses}
+    if to_address is not UNSET:
+        filter["to"] = from_address.mongo_filter()
 
-    if collections is not UNSET and len(collections) > 0:
-        filter["contract_address"] = {"$in": collections}
+    if collection is not UNSET:
+        filter["contract_address"] = from_address.mongo_filter()
 
     if after is not UNSET:
         filter["_id"] = order_direction.mongo_after_cursor(after)
