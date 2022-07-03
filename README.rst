@@ -11,6 +11,12 @@ https://nftmeow-api.apibara.com/
 
 You can visit the link to interact with the GraphQL API.
 
+Pagination
+----------
+
+The GraphQL API follows the `Relay Specification <https://relay.dev/docs/guides/graphql-server-specification/>`_
+for pagination.
+
 Example Queries
 ---------------
 
@@ -98,12 +104,12 @@ Getting Started
 
 Start by installing `docker-compose` and using it to run MongoDB and Apibara Server.
 
- - `docker-compose up`
+- `docker-compose up`
 
 Then install Poetry and the Python dependencies needed by this project.
 
- - `poetry install`
+- `poetry install`
 
 Finally, run the indexer.
 
- - `nftmeow indexer`
+- `nftmeow indexer`
