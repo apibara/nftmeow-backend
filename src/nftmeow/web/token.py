@@ -1,22 +1,17 @@
 from audioop import add
 from dataclasses import dataclass
-from typing import Optional, List, Tuple
+from typing import List, Optional, Tuple
+
 import strawberry
+from pymongo.database import Database
 from strawberry import UNSET
 from strawberry.dataloader import DataLoader
-from pymongo.database import Database
 
-from nftmeow.web.context import Info, Context
-from nftmeow.web.pagination import (
-    Cursor,
-    Connection,
-    Filter,
-    PageInfo,
-    Edge,
-    cursor_from_mongo_id,
-)
-from nftmeow.web.scalar import Address, OrderDirection, TokenId
 from nftmeow.web.collection import Collection, get_collection
+from nftmeow.web.context import Context, Info
+from nftmeow.web.pagination import (Connection, Cursor, Edge, Filter, PageInfo,
+                                    cursor_from_mongo_id)
+from nftmeow.web.scalar import Address, OrderDirection, TokenId
 
 
 @strawberry.type
@@ -111,12 +106,11 @@ class TokensByAddressTokenIdLoader:
 
         result = dict()
         for addr, token_ids in by_addr.items():
-            tokens = self.db["tokens"].find({
-                "contract_address": addr,
-                "token_id": { "$in": token_ids }
-            })
+            tokens = self.db["tokens"].find(
+                {"contract_address": addr, "token_id": {"$in": token_ids}}
+            )
             for token in tokens:
-                result[addr, token['token_id']] = token
+                result[addr, token["token_id"]] = token
 
         return [result[addr, token_id] for addr, token_id in tokens_addr_id]
 

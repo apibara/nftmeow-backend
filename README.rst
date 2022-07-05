@@ -2,7 +2,7 @@ NFT Meow API
 ============
 
 This project contains the backend for NFT Meow. NFT data is aggregated using
-Apibara.
+`Apibara Server <https://github.com/apibara/apibara/>`_ and the `Python SDK <https://github.com/apibara/python-sdk>`_.
 
 
 The code in this repository is deployed at the following address:

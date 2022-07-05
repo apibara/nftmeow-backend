@@ -1,20 +1,21 @@
 """NFTMeow GraphQL server."""
 
 import asyncio
-from typing import List
 from logging import getLogger
-from aiohttp import web
+from typing import List
 
-from pymongo import MongoClient
 import strawberry
+from aiohttp import web
+from pymongo import MongoClient
 from strawberry.aiohttp.views import GraphQLView
+
+from nftmeow.web.collection import (Collection, collection_loader,
+                                    get_collections)
 from nftmeow.web.context import Context
-
 from nftmeow.web.pagination import Connection
-from nftmeow.web.collection import Collection, collection_loader, get_collections
-from nftmeow.web.token import Token, get_tokens, tokens_by_address_token_id_loader
+from nftmeow.web.token import (Token, get_tokens,
+                               tokens_by_address_token_id_loader)
 from nftmeow.web.transfer import Transfer, get_transfers
-
 
 logger = getLogger(__name__)
 
@@ -38,7 +39,9 @@ class NFTMeowGraphQLView(GraphQLView):
         return Context(
             db=self._db,
             collection_loader=collection_loader(self._db),
-            tokens_by_address_token_id_loader=tokens_by_address_token_id_loader(self._db),
+            tokens_by_address_token_id_loader=tokens_by_address_token_id_loader(
+                self._db
+            ),
         )
 
 

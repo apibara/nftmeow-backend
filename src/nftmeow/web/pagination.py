@@ -1,9 +1,8 @@
 import base64
-from typing import Generic, TypeVar, Optional, List
-from bson import ObjectId
+from typing import Generic, List, Optional, TypeVar
 
 import strawberry
-
+from bson import ObjectId
 
 GenericType = TypeVar("GenericType")
 

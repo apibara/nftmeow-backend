@@ -1,20 +1,14 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from pymongo.database import Database
 import strawberry
+from pymongo.database import Database
 from strawberry import UNSET
 from strawberry.dataloader import DataLoader
 
 from nftmeow.web.context import Context, Info
-from nftmeow.web.pagination import (
-    Connection,
-    Cursor,
-    Filter,
-    Edge,
-    PageInfo,
-    cursor_from_mongo_id,
-)
+from nftmeow.web.pagination import (Connection, Cursor, Edge, Filter, PageInfo,
+                                    cursor_from_mongo_id)
 from nftmeow.web.scalar import Address, OrderDirection
 
 

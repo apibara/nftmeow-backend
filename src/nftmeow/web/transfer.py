@@ -3,21 +3,15 @@ from datetime import datetime
 from enum import Enum
 from typing import List, Optional
 
-from pymongo.database import Database
 import strawberry
+from pymongo.database import Database
 from strawberry import UNSET
 
 from nftmeow.web.context import Info
+from nftmeow.web.pagination import (Connection, Cursor, Edge, Filter, PageInfo,
+                                    cursor_from_mongo_id)
 from nftmeow.web.scalar import Address, OrderDirection, TokenId
 from nftmeow.web.token import Token, get_token_by_address_and_id
-from nftmeow.web.pagination import (
-    Cursor,
-    Connection,
-    Filter,
-    PageInfo,
-    Edge,
-    cursor_from_mongo_id,
-)
 
 
 @strawberry.enum

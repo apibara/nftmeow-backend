@@ -1,8 +1,8 @@
-from typing import NewType
 from enum import Enum
-from bson import ObjectId
+from typing import NewType
 
 import strawberry
+from bson import ObjectId
 
 from nftmeow.web.pagination import Cursor
 

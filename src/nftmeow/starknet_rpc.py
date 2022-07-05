@@ -1,6 +1,7 @@
 """Make RPC calls to a StarkNet node."""
 
 from typing import Any, List
+
 import aiohttp
 from apibara.starknet import get_selector_from_name
 
